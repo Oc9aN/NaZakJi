@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startActivity(new Intent(this, Splash.class));
 
 //        // 검색 버튼 클릭시 액티비티 전환
 //        ImageButton name_rule_btn = (ImageButton) findViewById(R.id.main_search_btn);
