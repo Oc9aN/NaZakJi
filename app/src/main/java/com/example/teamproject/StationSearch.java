@@ -26,37 +26,37 @@ public class StationSearch extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station_search);
 
-//        // 출발역 버튼 클릭시 액티비티 전환
-//        Button start_btn = (Button) findViewById(R.id.start_station);
-//        start_btn.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), MainActivity4.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        // 환승역 버튼 클릭시 액티비티 전환
-//        Button middle_btn = (Button) findViewById(R.id.middle_station);
-//        middle_btn.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), MainActivity4.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        // 도착역 버튼 클릭시 액티비티 전환
-//        Button end_btn = (Button) findViewById(R.id.end_station);
-//        end_btn.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), MainActivity4.class);
-//                startActivity(intent);
-//            }
-//        });
+        // 출발역 버튼 클릭시 액티비티 전환
+        Button start_btn = (Button) findViewById(R.id.start_station);
+        start_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FindStation.class);
+                startActivity(intent);
+            }
+        });
+
+        // 환승역 버튼 클릭시 액티비티 전환
+        Button middle_btn = (Button) findViewById(R.id.middle_station);
+        middle_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FindStation.class);
+                startActivity(intent);
+            }
+        });
+
+        // 도착역 버튼 클릭시 액티비티 전환
+        Button end_btn = (Button) findViewById(R.id.end_station);
+        end_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FindStation.class);
+                startActivity(intent);
+            }
+        });
     }
 }
