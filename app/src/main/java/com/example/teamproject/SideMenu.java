@@ -69,16 +69,5 @@ public class SideMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        // 설정 버튼 클릭시 액티비티 전환
-        Button settings_btn = (Button) findViewById(R.id.menu_settings);
-        settings_btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), StationSearch.class);
-                startActivity(intent);
-            }
-        });
     }
 }
