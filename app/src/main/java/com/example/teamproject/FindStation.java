@@ -85,7 +85,7 @@ public class FindStation extends AppCompatActivity {
         adapter = new SearchAdapter(list, this);
 
         // !!
-        listView = (ListView)findViewById(R.id.listView);
+//        listView = (ListView)findViewById(R.id.listView);
 
         listView.setAdapter(adapter);
 
