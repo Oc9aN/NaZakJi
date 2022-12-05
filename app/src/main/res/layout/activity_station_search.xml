@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="환승역 : "
+                android:text="경유역 : "
                 android:textColor="#808080"
                 android:background="#00ff0000" />
 
