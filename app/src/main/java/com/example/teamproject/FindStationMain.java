@@ -1,56 +1,29 @@
 package com.example.teamproject;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Environment;
-import android.view.KeyEvent;
-import android.os.Handler;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.view.MotionEvent;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Toast;
-import android.widget.TextView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import static android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH;
-
-import org.w3c.dom.Text;
-
-import java.util.concurrent.ScheduledExecutorService;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FindStation extends AppCompatActivity {
-
+public class FindStationMain extends AppCompatActivity {
     private List<String> list;
     private ListView listView;
     private EditText editSearch;
@@ -59,7 +32,6 @@ public class FindStation extends AppCompatActivity {
     private SearchAdapter adapter;  //리스트뷰에 연결할 어뎁터
     private ArrayList<String> arraylist;
     private List<String> searchlist;
-    private String station;
 
     private final static String file = "searchlist.txt";
 
@@ -67,10 +39,6 @@ public class FindStation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_station);
-
-        //데이터 가져오기
-        Intent intent = getIntent();
-        station = intent.getStringExtra("station");
 
         editSearch = (EditText) findViewById(R.id.editSearch);
         listView = (ListView) findViewById(R.id.listView);
@@ -83,7 +51,6 @@ public class FindStation extends AppCompatActivity {
         settingList();
 
         //리스트 데이터 arraylist에 복사
-
         arraylist = new ArrayList<String>();
         arraylist.addAll(list);
 
@@ -93,8 +60,9 @@ public class FindStation extends AppCompatActivity {
 
         listView.setAdapter(adapter);
 
-        list.clear();
 
+
+        list.clear();
 
         editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -102,7 +70,7 @@ public class FindStation extends AppCompatActivity {
                 switch (actionId)
                 {
                     case IME_ACTION_SEARCH :
-                        Toast.makeText(FindStation.this, "검색 완료", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FindStationMain.this, "검색 완료", Toast.LENGTH_SHORT).show();
                         // 검색버튼이 눌리면 실행할 내용 구현하기
                         String text = editSearch.getText().toString();
                         if(text == null)
@@ -145,7 +113,7 @@ public class FindStation extends AppCompatActivity {
         //문자 입력 없으면 최근 검색어 보여줌.
         if(charText.length() == 0){
             try {
-                searchlist = readFromFile();
+                searchlist = readFromFile(file);
                 for(int i = searchlist.size() - 1; i >= 0; i--){
                     list.add(searchlist.get(i));
                 }
@@ -168,34 +136,9 @@ public class FindStation extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String text = (String) adapterView.getAdapter().getItem(i);
-                if(text == null)
-                    return ;
-                try{
-                    writeToFile(file, text);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                String ret = (String) adapterView.getAdapter().getItem(i);
-                if(station == "start"){
-                    Intent intent = new Intent();
-                    intent.putExtra("result", ret);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
-                else if(station == "middle"){
-                    Intent intent = new Intent();
-                    intent.putExtra("result", ret);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
-                else{
-                    Intent intent = new Intent();
-                    intent.putExtra("result", ret);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
-                Toast.makeText(FindStation.this, "성공", Toast.LENGTH_SHORT).show();
+//                Object lst = (Object) adapterView.getAdapter().getItem(i);
+                String rtu = String.valueOf((Object) adapterView.getAdapter().getItem(i));
+                Toast.makeText(FindStationMain.this, "성공", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -244,11 +187,11 @@ public class FindStation extends AppCompatActivity {
     }
 
     //최근 검색어 파일을 읽어오는 메소드
-    public ArrayList<String> readFromFile() throws Exception{
+    public ArrayList<String> readFromFile(String file) throws Exception{
         String line = null;
         ArrayList<String> searchlist = new ArrayList<String>();
         try{
-            BufferedReader buf = new BufferedReader(new FileReader(getFilesDir() + "/" + "searchlist.txt"));
+            BufferedReader buf = new BufferedReader(new FileReader(getFilesDir() + "/" + file));
             while((line = buf.readLine()) != null){
                 searchlist.add(line);
             }

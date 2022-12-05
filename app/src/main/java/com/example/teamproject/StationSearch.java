@@ -19,12 +19,18 @@ import android.widget.TextView;
 
 public class StationSearch extends AppCompatActivity {
 
+    TextView start;
+    TextView middle;
+    TextView end;
     Button buttonEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station_search);
+        start = (TextView)findViewById(R.id.real_start_station);
+        middle = (TextView)findViewById(R.id.real_middle_station);
+        end = (TextView)findViewById(R.id.real_end_station);
 
         // 출발역 버튼 클릭시 액티비티 전환
         Button start_btn = (Button) findViewById(R.id.start_station);
@@ -33,7 +39,8 @@ public class StationSearch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), FindStation.class);
-                startActivity(intent);
+                intent.putExtra("station", "start");
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -44,7 +51,8 @@ public class StationSearch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), FindStation.class);
-                startActivity(intent);
+                intent.putExtra("station", "middle");
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -55,8 +63,31 @@ public class StationSearch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), FindStation.class);
-                startActivity(intent);
+                intent.putExtra("station", "end");
+                startActivityForResult(intent, 3);
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            if(resultCode == RESULT_OK){
+                String result = data.getStringExtra("result");
+                start.setText(result);
+            }
+        }
+        else if(requestCode == 2){
+            if(resultCode == RESULT_OK){
+                String result = data.getStringExtra("result");
+                middle.setText(result);
+            }
+        }
+        else if(requestCode == 3){
+            if(resultCode == RESULT_OK){
+                String result = data.getStringExtra("result");
+                end.setText(result);
+            }
+        }
     }
 }
