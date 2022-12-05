@@ -22,17 +22,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startActivity(new Intent(this, Splash.class));
 
-//        // 검색 버튼 클릭시 액티비티 전환
-//        ImageButton name_rule_btn = (ImageButton) findViewById(R.id.main_search_btn);
-//        name_rule_btn.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), MainActivity4.class);
-//                startActivity(intent);
-//            }
-//        });
+        // 검색 버튼 클릭시 액티비티 전환
+        ImageButton name_rule_btn = (ImageButton) findViewById(R.id.main_search_btn);
+        name_rule_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FindStation.class);
+                startActivity(intent);
+            }
+        });
 
         // 메뉴 버튼 클릭시 액티비티 전환
         ImageButton menu_btn = (ImageButton) findViewById(R.id.main_side_btn);
