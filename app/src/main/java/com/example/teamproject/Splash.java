@@ -17,6 +17,6 @@ public class Splash  extends Activity {
             public void run() {
                 finish();   // 3초 후 이미지 닫기
             }
-        }, 3000);
+        }, 1500);
     }
 }
