@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/evan2/Desktop/TeamProject1/NaZakJi/app/src/main/res/layout/activity_main.xml" value="0.12132725430597771" />
+        <entry key="..\:/Users/evan2/Desktop/TeamProject1/NaZakJi/app/src/main/res/layout/activity_board.xml" value="0.16145833333333334" />
+        <entry key="..\:/Users/evan2/Desktop/TeamProject1/NaZakJi/app/src/main/res/layout/activity_main.xml" value="0.152" />
+        <entry key="..\:/Users/evan2/Desktop/TeamProject1/NaZakJi/app/src/main/res/layout/activity_post.xml" value="0.16145833333333334" />
         <entry key="..\:/Users/evan2/Desktop/TeamProject1/NaZakJi/app/src/main/res/layout/activity_side_menu.xml" value="0.1" />
         <entry key="..\:/Users/evan2/Desktop/TeamProject1/NaZakJi/app/src/main/res/layout/activity_station_search.xml" value="0.264" />
         <entry key="..\:/Users/evan2/Desktop/TeamProject1/NaZakJi/app/src/main/res/layout/row_listview.xml" value="0.24947916666666667" />
