@@ -32,6 +32,20 @@ public class StationSearch extends AppCompatActivity {
         middle = (TextView)findViewById(R.id.real_middle_station);
         end = (TextView)findViewById(R.id.real_end_station);
 
+        //데이터 가져오기
+        Intent intent = getIntent();
+        String stt = intent.getStringExtra("stt");
+        String number = intent.getStringExtra("number");
+        if(stt.equals("start")){
+            start.setText(number);
+        }
+        else if(stt.equals("middle")){
+            middle.setText(number);
+        }
+        else if(stt.equals("end")){
+            end.setText(number);
+        }
+
         // 출발역 버튼 클릭시 액티비티 전환
         Button start_btn = (Button) findViewById(R.id.start_station);
         start_btn.setOnClickListener(new View.OnClickListener() {

@@ -195,7 +195,7 @@ public class FindStation extends AppCompatActivity {
                     setResult(RESULT_OK, intent);
                     finish();
                 }
-                Toast.makeText(FindStation.this, "성공", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FindStation.this, "적용", Toast.LENGTH_SHORT).show();
             }
         });
     }

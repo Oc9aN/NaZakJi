@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name = "selectlist">Dialog</string>
+
+    <string-array name="station">
+        <item>출발역</item>
+        <item>경유역</item>
+        <item>도착역</item>
+    </string-array>
+</resources>
