@@ -1,16 +1,19 @@
 package com.example.teamproject;
 
+import static com.example.teamproject.FirebaseID.time;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
-import com.example.teamproject.adapters.PostAdapter;
-import com.example.teamproject.models.Post;
 import com.example.teamproject.adapters.PostAdapter;
 import com.example.teamproject.models.Post;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BoardActivity extends AppCompatActivity implements View.OnClickListener {
+public class BoardActivity extends AppCompatActivity implements RecyclerViewItemClickListener.OnItemClickListener {
 
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
 
@@ -43,7 +46,7 @@ public class BoardActivity extends AppCompatActivity implements View.OnClickList
         mPostRecyclerView = findViewById(R.id.main_recyclerview);
 
 
-        //findViewById().setOnClickListener(this); 뷰 페이저 여기 연결
+        mPostRecyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(this,mPostRecyclerView,this));
 
     }
 
@@ -52,57 +55,37 @@ public class BoardActivity extends AppCompatActivity implements View.OnClickList
         super.onStart();
         mDatas = new ArrayList<>();
         mStore.collection(FirebaseID.post)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .orderBy(FirebaseID.timestamp, Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            if(task.getResult() != null){
-                                for(DocumentSnapshot snap : task.getResult()){
-                                    Map<String, Object> shot = snap.getData();
-                                    String documentId = String.valueOf(shot.get(FirebaseID.documentId));
-                                    String title = String.valueOf(shot.get(FirebaseID.title));
-                                    String contents = String.valueOf(shot.get(FirebaseID.contents));
-                                    Post data = new Post(documentId, title, contents);
-                                    mDatas.add(data);
-                                }
-                                mAdapter = new PostAdapter(mDatas);
-                                mPostRecyclerView.setAdapter(mAdapter);
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                        if (queryDocumentSnapshots != null) {
+                            mDatas.clear();
+                            for (DocumentSnapshot snap : queryDocumentSnapshots.getDocuments()) {
+                                Map<String, Object> shot = snap.getData();
+                                String documentId = String.valueOf(shot.get(FirebaseID.documentId));
+                                String name = String.valueOf(shot.get(FirebaseID.name));
+                                String title = String.valueOf(shot.get(FirebaseID.title));
+                                String contents = String.valueOf(shot.get(FirebaseID.contents));
+                                String time = String.valueOf(shot.get(FirebaseID.time));
+                                Post data = new Post(documentId, name,title, contents,time);
+                                mDatas.add(data);
                             }
+                            mAdapter = new PostAdapter(mDatas);
+                            mPostRecyclerView.setAdapter(mAdapter);
                         }
                     }
+
                 });
     }
 
-    /*@Override
-        protected void onStart() {
-            super.onStart();
-            mDatas = new ArrayList<>();
-            mStore.collection(FirebaseID.post)
-                    .orderBy(FirebaseID.timestamp, Query.Direction.DESCENDING)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                            if (queryDocumentSnapshots != null) {
-                                mDatas.clear();
-                                for (DocumentSnapshot snap : queryDocumentSnapshots.getDocuments()) {
-                                    Map<String, Object> shot = snap.getData();
-                                    String documentId = String.valueOf(shot.get(FirebaseID.documentId));
-                                    String title = String.valueOf(shot.get(FirebaseID.title));
-                                    String contents = String.valueOf(shot.get(FirebaseID.contents));
-                                    Post data = new Post(documentId, title, contents);
-                                    mDatas.add(data);
-                                }
-                                mAdapter = new PostAdapter(mDatas);
-                                mPostRecyclerView.setAdapter(mAdapter);
-                            }
-                        }
 
-                    });
-        }
-    */
     @Override
-    public void onClick(View view) {
-        startActivity(new Intent(this,PostActivity.class));
+    public void onItemClick(View view, int position) {
+        Intent intent = new Intent(this,Post2Activity.class);
+        intent.putExtra(FirebaseID.documentId,mDatas.get(position).getDocumentId());
+        startActivity(intent);
+
     }
+
 }

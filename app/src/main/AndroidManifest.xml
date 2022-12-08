@@ -21,15 +21,11 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".FindStationMain"
+            android:name=".Post2Activity"
             android:exported="false" />
         <activity
-            android:name=".BoardActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:name=".FindStationMain"
+            android:exported="false" />
         <activity
             android:name=".FindStation"
             android:exported="false" />
