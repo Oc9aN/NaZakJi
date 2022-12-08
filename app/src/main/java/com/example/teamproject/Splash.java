@@ -15,8 +15,8 @@ public class Splash  extends Activity {
         hd.postDelayed(new Runnable() {
             @Override
             public void run() {
-                finish();   // 3초 후 이미지 닫기
+                finish();   // 2초 후 이미지 닫기
             }
-        }, 1500);
+        }, 2000);
     }
 }
