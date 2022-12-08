@@ -29,74 +29,110 @@
             android:layout_marginTop="20dp"
             android:background="#000000" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/start_station"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="출발역 : "
-                android:textColor="#808080"
+                android:gravity="left|center_horizontal"
+                android:text="출발역: "
+                android:textColor="@color/black"
                 android:background="#00ff0000" />
 
             <TextView
                 android:id="@+id/real_start_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="30dp"
                 android:text="start station" />
 
-        </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="X"
+                android:textSize="20dp"
+                android:textColor="#808080"
+                android:background="#00ff0000"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="20dp" />
 
-        <LinearLayout
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/middle_station"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:gravity="left|center_horizontal"
                 android:text="경유역 : "
-                android:textColor="#808080"
+                android:textColor="@color/black"
                 android:background="#00ff0000" />
 
             <TextView
                 android:id="@+id/real_middle_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="30dp"
                 android:text="middle station" />
 
-        </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="X"
+                android:textSize="20dp"
+                android:textColor="#808080"
+                android:background="#00ff0000"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="20dp" />
 
-        <LinearLayout
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/end_station"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:gravity="left|center_horizontal"
                 android:text="도착역 : "
-                android:textColor="#808080"
+                android:textColor="@color/black"
                 android:background="#00ff0000" />
 
             <TextView
                 android:id="@+id/real_end_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="30dp"
                 android:text="end station" />
 
-        </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="X"
+                android:textSize="20dp"
+                android:textColor="#808080"
+                android:background="#00ff0000"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="20dp" />
+
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
@@ -116,7 +152,7 @@
                 android:text="최단거리"
                 android:textSize="12dp"
                 android:layout_weight="2"
-                android:textColor="#808080"
+                android:textColor="#808000"
                 android:background="#00ff0000"/>
 
             <Button
@@ -165,6 +201,7 @@
                 android:layout_height="wrap_content"
                 android:text="소요시간"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="20dp"
@@ -176,6 +213,27 @@
                 android:text="00:25:00"
                 android:textSize="18dp"
                 android:textStyle="bold"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="거리"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2000" />
 
 
         </LinearLayout>
@@ -197,6 +255,7 @@
                 android:layout_height="wrap_content"
                 android:text="환승"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="20dp" />
             <TextView
@@ -211,6 +270,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="비용"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="20dp" />
@@ -221,7 +281,51 @@
                 android:textStyle="bold"
                 android:textSize="18dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="15dp"/>
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="30dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10" >
+
+                <ImageView
+                    android:id="@+id/train1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:src="@drawable/redtrain" />
+
+                <ImageView
+                    android:id="@+id/train2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:src="@drawable/redtrain" />
+
+                <ImageView
+                    android:id="@+id/train3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:src="@drawable/redtrain" />
+
+                <ImageView
+                    android:id="@+id/train4"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:src="@drawable/redtrain" />
+
+                <ImageView
+                    android:id="@+id/train5"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:src="@drawable/orangetrain" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
