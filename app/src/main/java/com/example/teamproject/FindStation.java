@@ -105,12 +105,12 @@ public class FindStation extends AppCompatActivity {
                         Toast.makeText(FindStation.this, "검색 완료", Toast.LENGTH_SHORT).show();
                         // 검색버튼이 눌리면 실행할 내용 구현하기
                         String text = editSearch.getText().toString();
-                        if(text == null)
-                            return true;
-                        try{
-                            writeToFile(file, text);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        if(text != null){
+                            try {
+                                writeToFile(file, text);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                         search(text);
                 }
@@ -169,12 +169,12 @@ public class FindStation extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String text = (String) adapterView.getAdapter().getItem(i);
-                if(text == null)
-                    return ;
-                try{
-                    writeToFile(file, text);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if(text != null){
+                    try {
+                        writeToFile(file, text);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 String ret = (String) adapterView.getAdapter().getItem(i);
                 if(station == "start"){
@@ -195,7 +195,6 @@ public class FindStation extends AppCompatActivity {
                     setResult(RESULT_OK, intent);
                     finish();
                 }
-                Toast.makeText(FindStation.this, "적용", Toast.LENGTH_SHORT).show();
             }
         });
     }

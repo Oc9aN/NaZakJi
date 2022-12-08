@@ -79,12 +79,12 @@ public class FindStationMain extends AppCompatActivity {
                         Toast.makeText(FindStationMain.this, "검색 완료", Toast.LENGTH_SHORT).show();
                         // 검색버튼이 눌리면 실행할 내용 구현하기
                         String text = editSearch.getText().toString();
-                        if(text == null)
-                            return true;
-                        try{
-                            writeToFile(file, text);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        if(text != ""){
+                            try {
+                                writeToFile(file, text);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                         search(text);
                 }
@@ -444,7 +444,6 @@ public class FindStationMain extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), StationSearch.class);
                     intent.putExtra("stt", "start");
                     intent.putExtra("number", ret);
-                    Toast.makeText(FindStationMain.this, ret, Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                     finish();
                 }

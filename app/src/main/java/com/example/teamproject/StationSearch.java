@@ -36,14 +36,14 @@ public class StationSearch extends AppCompatActivity {
         Intent intent = getIntent();
         String stt = intent.getStringExtra("stt");
         String number = intent.getStringExtra("number");
-        if(stt.equals("start")){
-            start.setText(number);
-        }
-        else if(stt.equals("middle")){
-            middle.setText(number);
-        }
-        else if(stt.equals("end")){
-            end.setText(number);
+        if(stt != null){
+            if (stt.equals("start")) {
+                start.setText(number);
+            } else if (stt.equals("middle")) {
+                middle.setText(number);
+            } else if (stt.equals("end")) {
+                end.setText(number);
+            }
         }
 
         // 출발역 버튼 클릭시 액티비티 전환
