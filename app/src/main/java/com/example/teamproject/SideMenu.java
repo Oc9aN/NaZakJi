@@ -54,7 +54,7 @@ public class SideMenu extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), StationSearch.class);
+                Intent intent = new Intent(getApplicationContext(), uncomfortable_menu.class);
                 startActivity(intent);
             }
         });
