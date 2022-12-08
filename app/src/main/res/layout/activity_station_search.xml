@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,20 +13,38 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="길찾기"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="180dp"
+                android:text="길찾기"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/favorite"
+                android:layout_width="57dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="115dp"
+                android:layout_marginTop="10dp"
+                android:background="#00ff0000"
+                android:text="☆"
+                android:textColor="#808080"
+                android:textSize="22dp" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2px"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="#000000" />
 
         <LinearLayout
@@ -140,7 +158,7 @@
                 android:background="#00ff0000"/>
 
             <Button
-                android:id="@+id/short_money"
+                android:id="@+id/short_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="최소비용"
@@ -181,6 +199,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/route"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="101->102->103->104"
@@ -195,11 +214,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="환승"
+                android:text="환승 횟수"
                 android:textStyle="bold"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="20dp" />
             <TextView
+                android:id="@+id/transfer_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0회"
@@ -215,6 +235,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="20dp" />
             <TextView
+                android:id="@+id/cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1000원"
@@ -227,4 +248,4 @@
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
