@@ -210,6 +210,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"/>
             <TextView
+                android:id="@+id/time_taken"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -246,6 +247,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/route"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="101->102->103->104"
@@ -266,6 +268,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="20dp" />
             <TextView
+                android:id="@+id/transfer_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0회"
@@ -282,6 +285,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="20dp" />
             <TextView
+                android:id="@+id/cost_taken"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1000원"

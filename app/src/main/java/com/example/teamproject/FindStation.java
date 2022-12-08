@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Environment;
 import android.view.KeyEvent;
 import android.os.Handler;
@@ -58,6 +59,7 @@ public class FindStation extends AppCompatActivity {
     private SearchAdapter adapter;  //리스트뷰에 연결할 어뎁터
     private ArrayList<String> arraylist;
     private List<String> searchlist;
+    private String station;
 
     private final static String file = "searchlist.txt";
 
@@ -65,6 +67,10 @@ public class FindStation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_station);
+
+        //데이터 가져오기
+        Intent intent = getIntent();
+        station = intent.getStringExtra("station");
 
         editSearch = (EditText) findViewById(R.id.editSearch);
         listView = (ListView) findViewById(R.id.listView);
@@ -77,28 +83,18 @@ public class FindStation extends AppCompatActivity {
         settingList();
 
         //리스트 데이터 arraylist에 복사
+
         arraylist = new ArrayList<String>();
         arraylist.addAll(list);
 
-        //searchlist = new ArrayList<String>();
 
         adapter = new SearchAdapter(list, this);
 
-        // !!
-//        listView = (ListView)findViewById(R.id.listView);
 
         listView.setAdapter(adapter);
 
-
-
         list.clear();
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(MainActivity.this, "성공", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -109,12 +105,12 @@ public class FindStation extends AppCompatActivity {
                         Toast.makeText(FindStation.this, "검색 완료", Toast.LENGTH_SHORT).show();
                         // 검색버튼이 눌리면 실행할 내용 구현하기
                         String text = editSearch.getText().toString();
-                        if(text == null)
-                            return true;
-                        try{
-                            writeToFile(file, text);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        if(text != null){
+                            try {
+                                writeToFile(file, text);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                         search(text);
                 }
@@ -139,15 +135,6 @@ public class FindStation extends AppCompatActivity {
                 search(text);
             }
         });
-
-
-
-//        listView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
     }
 
     public void search(String charText){
@@ -158,7 +145,7 @@ public class FindStation extends AppCompatActivity {
         //문자 입력 없으면 최근 검색어 보여줌.
         if(charText.length() == 0){
             try {
-                searchlist = readFromFile(file);
+                searchlist = readFromFile();
                 for(int i = searchlist.size() - 1; i >= 0; i--){
                     list.add(searchlist.get(i));
                 }
@@ -169,7 +156,6 @@ public class FindStation extends AppCompatActivity {
         else{   //입력하면 포함된 데이터 보여줌
             for(int i = 0; i < arraylist.size(); i++){
                 if (arraylist.get(i).toLowerCase().contains(charText))
-                //if(arraylist.get(i).substring(0,charText.length()) == charText)
                 {
                     list.add(arraylist.get(i));
                 }
@@ -182,9 +168,33 @@ public class FindStation extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Object lst = (Object) adapterView.getAdapter().getItem(i);
-                String rtu = String.valueOf((Object) adapterView.getAdapter().getItem(i));
-                Toast.makeText(FindStation.this, "성공", Toast.LENGTH_SHORT).show();
+                String text = (String) adapterView.getAdapter().getItem(i);
+                if(text != null){
+                    try {
+                        writeToFile(file, text);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                String ret = (String) adapterView.getAdapter().getItem(i);
+                if(station == "start"){
+                    Intent intent = new Intent();
+                    intent.putExtra("result", ret);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                else if(station == "middle"){
+                    Intent intent = new Intent();
+                    intent.putExtra("result", ret);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                else{
+                    Intent intent = new Intent();
+                    intent.putExtra("result", ret);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
         });
     }
@@ -233,11 +243,11 @@ public class FindStation extends AppCompatActivity {
     }
 
     //최근 검색어 파일을 읽어오는 메소드
-    public ArrayList<String> readFromFile(String file) throws Exception{
+    public ArrayList<String> readFromFile() throws Exception{
         String line = null;
         ArrayList<String> searchlist = new ArrayList<String>();
         try{
-            BufferedReader buf = new BufferedReader(new FileReader(getFilesDir() + "/" + file));
+            BufferedReader buf = new BufferedReader(new FileReader(getFilesDir() + "/" + "searchlist.txt"));
             while((line = buf.readLine()) != null){
                 searchlist.add(line);
             }
