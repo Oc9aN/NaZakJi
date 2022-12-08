@@ -22,10 +22,9 @@
         </activity>
         <activity
             android:name=".Post2Activity"
-            android:name=".uncomfortable_menu"
             android:exported="false" />
         <activity
-            android:name=".FindStationMain"
+            android:name=".uncomfortable_menu"
             android:exported="false" />
         <activity
             android:name=".FindStationMain"
