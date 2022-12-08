@@ -7,6 +7,7 @@ import com.example.teamproject.navigation.Graph;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Train {
     private String name;
@@ -16,19 +17,24 @@ public class Train {
     private boolean direction;
     private int beforeStationIndex;
     private int nextStationIndex;
-    private ArrayList<Integer> density;
+    private int[] density;
+    private Random random;
 
     public int getLineNum() {
         return lineNum;
     }
 
-    public Train(TrainList trainlist, LocalTime startTime, String name, int lineNum, boolean direction) {
+    public Train(TrainList trainlist, LocalTime startTime, String name, int lineNum, boolean direction, int block) {
+        this.random = new Random();
         this.startTime = startTime;
         this.name = name;
         this.lineNum = lineNum;
         this.direction = direction;
         this.trainlist = trainlist;
-        this.density = new ArrayList<>();
+        this.density = new int[block];
+        for (int i = 0; i < block; i++) {
+            this.density[i] = random.nextInt(101);
+        }
     }
 
     public int trainPos(int target, boolean targetDirection) {

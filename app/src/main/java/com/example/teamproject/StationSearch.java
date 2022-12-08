@@ -272,8 +272,9 @@ public class StationSearch extends AppCompatActivity {
             LocalTime startTime = LocalTime.of(Integer.parseInt(row.get(0)), Integer.parseInt(row.get(1)));
             String name = row.get(2);
             int lineNum = Integer.parseInt(row.get(3));
-            boolean direction =row.get(4).equals("forward");
-            trainlist.addTrains(new Train(trainlist, startTime, name, lineNum, direction));
+            boolean direction = row.get(4).equals("forward");
+            int block = Integer.parseInt(row.get(5));
+            trainlist.addTrains(new Train(trainlist, startTime, name, lineNum, direction, block));
         }
     }
 
