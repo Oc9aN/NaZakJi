@@ -208,7 +208,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="15dp"/>
             <TextView
                 android:id="@+id/time_taken"
                 android:layout_width="wrap_content"
@@ -217,32 +217,62 @@
                 android:text="00:25:00"
                 android:textSize="18dp"
                 android:textStyle="bold"/>
-
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="열차 남은 시간"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="25dp"/>
+            <TextView
+                android:id="@+id/time_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="00:25:00"
+                android:textSize="18dp"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
 
             <TextView
+                android:id="@+id/previous_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="거리"
-                android:textColor="@color/black"
+                android:text="이전역 : "
                 android:textStyle="bold"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="51dp"/>
-
+                android:textColor="@color/black"
+                android:layout_marginLeft="25dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2000"
+                android:text="previous"
                 android:textSize="18dp"
                 android:textStyle="bold"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginLeft="25dp"/>
 
+            <TextView
+                android:id="@+id/next_station"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="다음역 : "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginLeft="25dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="next"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"/>
 
         </LinearLayout>
 
@@ -292,8 +322,32 @@
                 android:textStyle="bold"
                 android:textSize="18dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="30dp"/>
+                android:layout_marginTop="15dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거리"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="30dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2000"
+                    android:textSize="18dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

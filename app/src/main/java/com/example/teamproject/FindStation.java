@@ -86,7 +86,11 @@ public class FindStation extends AppCompatActivity {
 
         arraylist = new ArrayList<String>();
         arraylist.addAll(list);
-
+        try {
+            searchlist = readFromFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         adapter = new SearchAdapter(list, this);
 
@@ -95,6 +99,7 @@ public class FindStation extends AppCompatActivity {
 
         list.clear();
 
+        search("");
 
         editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -102,16 +107,18 @@ public class FindStation extends AppCompatActivity {
                 switch (actionId)
                 {
                     case IME_ACTION_SEARCH :
-                        Toast.makeText(FindStation.this, "검색 완료", Toast.LENGTH_SHORT).show();
                         // 검색버튼이 눌리면 실행할 내용 구현하기
                         String text = editSearch.getText().toString();
-                        if(text != null){
+                        if(text.length() != 0){
                             try {
                                 writeToFile(file, text);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+                            Toast.makeText(FindStation.this, "검색 완료", Toast.LENGTH_SHORT).show();
                         }
+                        else
+                            Toast.makeText(FindStation.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
                         search(text);
                 }
                 return true;
@@ -123,12 +130,10 @@ public class FindStation extends AppCompatActivity {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
                 String text = editSearch.getText().toString();
@@ -169,7 +174,7 @@ public class FindStation extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String text = (String) adapterView.getAdapter().getItem(i);
-                if(text != null){
+                if(text.length() != 0){
                     try {
                         writeToFile(file, text);
                     } catch (Exception e) {
