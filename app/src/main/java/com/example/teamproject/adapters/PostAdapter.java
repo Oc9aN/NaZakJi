@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.teamproject.models.Post;
 import com.example.teamproject.R;
 import com.example.teamproject.models.Post;
 
@@ -33,8 +32,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
 
         Post data = datas.get(position);
+        holder.name.setText("작성자: "+data.getName());
         holder.title.setText(data.getTitle());
         holder.contents.setText(data.getContents());
+        holder.time.setText(data.getTime());
     }
 
     @Override
@@ -44,13 +45,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     class PostViewHolder extends RecyclerView.ViewHolder{
 
+        private TextView name;
         private TextView title;
         private TextView contents;
+        private TextView time;
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            name = itemView.findViewById(R.id.item_post_name);
             title = itemView.findViewById(R.id.item_post_title);
             contents = itemView.findViewById(R.id.item_post_contents);
+            time = itemView.findViewById(R.id.item_post_time);
+
         }
     }
 }
