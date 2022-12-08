@@ -53,6 +53,7 @@
                 android:text="start station" />
 
             <Button
+                android:id="@+id/start_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="X"
@@ -88,6 +89,7 @@
                 android:text="middle station" />
 
             <Button
+                android:id="@+id/middle_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="X"
@@ -123,6 +125,7 @@
                 android:text="end station" />
 
             <Button
+                android:id="@+id/end_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="X"
@@ -228,12 +231,16 @@
                 android:text="거리"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:layout_marginLeft="25dp" />
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="51dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2000" />
+                android:text="2000"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
 
 
         </LinearLayout>
