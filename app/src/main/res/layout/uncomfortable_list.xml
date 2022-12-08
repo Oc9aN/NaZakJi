@@ -37,7 +37,7 @@
         android:text="1호선                  070-1111-1111"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:textColor="#808080"
+        android:textColor="@color/black"
         android:background="#00ff0000" />
 
     <View
@@ -52,7 +52,7 @@
         android:text="2호선                  070-2222-2222"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:textColor="#808080"
+        android:textColor="@color/black"
         android:background="#00ff0000" />
 
     <View
@@ -67,7 +67,7 @@
         android:text="3호선                  070-3333-3333"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:textColor="#808080"
+        android:textColor="@color/black"
         android:background="#00ff0000" />
 
     <View
@@ -82,7 +82,7 @@
         android:text="4호선                  070-4444-4444"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:textColor="#808080"
+        android:textColor="@color/black"
         android:background="#00ff0000" />
 
     <View
@@ -97,7 +97,7 @@
         android:text="5호선                  070-5555-5555"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:textColor="#808080"
+        android:textColor="@color/black"
         android:background="#00ff0000" />
 
     <View
@@ -112,7 +112,7 @@
         android:text="6호선                  070-6666-6666"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:textColor="#808080"
+        android:textColor="@color/black"
         android:background="#00ff0000" />
 
     <View
@@ -127,7 +127,7 @@
         android:text="7호선                  070-7777-7777"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:textColor="#808080"
+        android:textColor="@color/black"
         android:background="#00ff0000" />
 
     <View
@@ -142,7 +142,7 @@
         android:text="8호선                  070-8888-8888"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:textColor="#808080"
+        android:textColor="@color/black"
         android:background="#00ff0000" />
 
     <View
@@ -157,7 +157,7 @@
         android:text="9호선                  070-9999-9999"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:textColor="#808080"
+        android:textColor="@color/black"
         android:background="#00ff0000" />
 
     <View
