@@ -258,7 +258,6 @@
             android:layout_marginBottom="10dp">
 
             <TextView
-                android:id="@+id/previous_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="이전역 : "
@@ -266,6 +265,7 @@
                 android:textColor="@color/black"
                 android:layout_marginLeft="25dp" />
             <TextView
+                android:id="@+id/previous_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="            "
@@ -274,7 +274,6 @@
                 android:layout_marginLeft="25dp"/>
 
             <TextView
-                android:id="@+id/next_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="다음역 : "
@@ -282,6 +281,7 @@
                 android:textColor="@color/black"
                 android:layout_marginLeft="25dp" />
             <TextView
+                android:id="@+id/next_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -370,6 +370,7 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="20dp"/>
                 <TextView
+                    android:id="@+id/distance_taken"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -217,31 +218,39 @@ public class StationSearch extends AppCompatActivity {
         int distance = 0;
         int cost = 0;
         int transfer = 0;
+        Train trainInfo; //이름/이전역/다음역/남은시간/혼잡도
 
         StringBuilder str = new StringBuilder();
 
         if (mid == 0) { //경유역이 없는 경우
             Dijkstra.ResultPair route = Dijkstra.dijkstra(graph, start, end, type);
+
             time = route.getWeight().getTime();
             distance = route.getWeight().getDistance();
             cost = route.getWeight().getCost();
+
+            trainInfo = this.trainlist.findMinTrain(route.getRoute());
+
             for (int i = 0; i < route.getRoute().size(); i++) {
                 str.append(route.getRoute().get(i).toString());
                 if (i < route.getRoute().size() - 1) {
                     str.append("->");
                 }
-                if (route.getRoute().get(i).isTransfer())
+                if (route.getRoute().get(i).isTransfer()) //환승 횟수 체크
                     transfer += 1;
             }
-//            str.append(this.trainlist.findMinTrain(route.getRoute()));
-//            str.append(" 시간: " + time + " 거리: " + distance + " 비용: " + cost);
         } else { //경유역이 있는경우
             Dijkstra.ResultPair route1 = Dijkstra.dijkstra(graph, start, mid, type);
             Dijkstra.ResultPair route2 = Dijkstra.dijkstra(graph, mid, end, type);
+
             time = route1.getWeight().getTime() + route2.getWeight().getTime();
             distance = route1.getWeight().getDistance() + route2.getWeight().getDistance();
             cost += route1.getWeight().getCost() + route2.getWeight().getCost();
+
+            route2.getRoute().remove(0);
             route1.getRoute().addAll(route2.getRoute());
+
+            trainInfo = this.trainlist.findMinTrain(route1.getRoute());
             for (int i = 0; i < route1.getRoute().size(); i++) {
                 str.append(route1.getRoute().get(i).toString());
                 if (i < route1.getRoute().size() - 1) {
@@ -250,21 +259,50 @@ public class StationSearch extends AppCompatActivity {
                 if (route1.getRoute().get(i).isTransfer())
                     transfer += 1;
             }
-//            str.append(this.trainlist.findMinTrain(route1.getRoute()));
-//            str.append(" 시간: " + time + " 거리: " + distance + " 비용: " + cost);
         }
 
         TextView time_taken = (TextView)findViewById(R.id.time_taken);
+        TextView route = (TextView)findViewById(R.id.route);
+        TextView cost_taken = (TextView)findViewById(R.id.cost_taken);
+        TextView transfer_count = (TextView)findViewById(R.id.transfer_count);
+        TextView distance_taken = (TextView)findViewById(R.id.distance_taken);
+        TextView previous_station = (TextView)findViewById(R.id.previous_station);
+        TextView next_station = (TextView)findViewById(R.id.next_station);
+        TextView time_left = (TextView)findViewById(R.id.time_left);
+        ImageView[] train_density = new ImageView[5];
+        train_density[0] = (ImageView)findViewById(R.id.train1);
+        train_density[1] = (ImageView)findViewById(R.id.train2);
+        train_density[2] = (ImageView)findViewById(R.id.train3);
+        train_density[3] = (ImageView)findViewById(R.id.train4);
+        train_density[4] = (ImageView)findViewById(R.id.train5);
+
         time_taken.setText(LocalTime.of(time/3600, (time%3600)/60, (time%3600)%60).toString());
 
-        TextView route = (TextView)findViewById(R.id.route);
         route.setText(str);
 
-        TextView cost_taken = (TextView)findViewById(R.id.cost_taken);
         cost_taken.setText(cost + "원");
 
-        TextView transfer_count = (TextView)findViewById(R.id.transfer_count);
         transfer_count.setText(transfer + "회");
+
+        distance_taken.setText(distance + "m");
+
+        previous_station.setText(trainInfo.getBefore() + "역");
+
+        next_station.setText(trainInfo.getnext() + "역");
+
+        time_left.setText(LocalTime.of(trainInfo.getMinTime()/3600, (trainInfo.getMinTime()%3600)/60, (trainInfo.getMinTime()%3600)%60).toString());
+
+        for (int i = 0; i < trainInfo.getblock(); i++) {
+            int drawableID = 0;
+            if (trainInfo.getDensity()[i] < 30) { //원활
+                drawableID = R.drawable.greentrain;
+            } else if (trainInfo.getDensity()[i] < 60) { //보통
+                drawableID = R.drawable.orangetrain;
+            } else { //혼잡
+                drawableID = R.drawable.redtrain;
+            }
+            train_density[i].setImageResource(drawableID);
+        }
     }
 
     public void setTrain(ArrayList<ArrayList<String>> excel) {
@@ -272,8 +310,9 @@ public class StationSearch extends AppCompatActivity {
             LocalTime startTime = LocalTime.of(Integer.parseInt(row.get(0)), Integer.parseInt(row.get(1)));
             String name = row.get(2);
             int lineNum = Integer.parseInt(row.get(3));
-            boolean direction =row.get(4).equals("forward");
-            trainlist.addTrains(new Train(trainlist, startTime, name, lineNum, direction));
+            boolean direction = row.get(4).equals("forward");
+            int block = Integer.parseInt(row.get(5));
+            trainlist.addTrains(new Train(trainlist, startTime, name, lineNum, direction, block));
         }
     }
 
