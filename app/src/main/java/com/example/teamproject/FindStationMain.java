@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -62,13 +63,9 @@ public class FindStationMain extends AppCompatActivity {
         arraylist = new ArrayList<String>();
         arraylist.addAll(list);
 
-
         adapter = new SearchAdapter(list, this);
 
-
         listView.setAdapter(adapter);
-
-
 
         list.clear();
 
@@ -127,7 +124,6 @@ public class FindStationMain extends AppCompatActivity {
         if(charText.length() == 0){
             try {
                 searchlist = readFromFile();
-                Collections.reverse(searchlist);
                 for(int i = searchlist.size() - 1; i >= 0; i--){
                     list.add(searchlist.get(i));
                 }
@@ -151,6 +147,14 @@ public class FindStationMain extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ret = (String) adapterView.getAdapter().getItem(i);
+                if (!arraylist.contains(ret)) {
+                    editSearch.setText(ret);
+                    editSearch.setSelection(editSearch.getText().length());
+                    editSearch.requestFocus();
+                    InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    manager.showSoftInput(editSearch, InputMethodManager.SHOW_IMPLICIT);
+                    return;
+                }
                 showDialog(ret);
             }
         });
@@ -205,7 +209,7 @@ public class FindStationMain extends AppCompatActivity {
                     }
                     else { //중복 지우고 맨위로
                         arrStr.remove(arrStr.indexOf(text));
-                        arrStr.add(0, text);
+                        arrStr.add(text);
                         BufferedWriter temp = new BufferedWriter(new FileWriter(getFilesDir() + "/" + file, false));
                         temp.close();
                         for (int i = 0; i < arrStr.size(); i++) {

@@ -8,6 +8,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
@@ -42,6 +43,18 @@ public class StationSearch extends AppCompatActivity {
     TextView start_station;
     TextView middle_station;
     TextView end_station;
+
+    //뒤로가기
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent event) {
+        if(keycode == android.view.KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(getApplicationContext(), SideMenu.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -53,6 +53,7 @@ public class BookmarkActivity extends AppCompatActivity implements RecyclerViewI
                 if (arrStr.get(i).contains("->"))
                     type = 1;
                 bookmarkArrayList.add(new Bookmark(arrStr.get(i), type));
+                type = 0;
             }
             adapter = new BookmarkAdapter(bookmarkArrayList);
             recyclerView.setAdapter(adapter);
@@ -61,6 +62,7 @@ public class BookmarkActivity extends AppCompatActivity implements RecyclerViewI
         }
     }
 
+    //파일 내용 지우고 새로쓰는거임!!!
     public void writeToFile(String file, String text) throws Exception{
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter(getFilesDir() + "/" + file, false));
@@ -89,24 +91,14 @@ public class BookmarkActivity extends AppCompatActivity implements RecyclerViewI
     @Override
     public void onItemClick(View view, int position) {
         if (bookmarkArrayList.get(position).getType() == 0)
-            showDialog(bookmarkArrayList.get(position).getBookmark(), position);
+            showDialog(bookmarkArrayList.get(position).getBookmark(), position, R.array.bookmark);
         else {
-            String[] stations = bookmarkArrayList.get(position).getBookmark().split("->");
-            Intent intent = new Intent(getApplicationContext(), StationSearch.class);
-            intent.putExtra("start", stations[0]);
-            if (stations.length > 2) {
-                intent.putExtra("mid", stations[1]);
-                intent.putExtra("end", stations[2]);
-            } else {
-                intent.putExtra("mid", "middle station");
-                intent.putExtra("end", stations[1]);
-            }
-            startActivity(intent);
+            showDialog(bookmarkArrayList.get(position).getBookmark(), position, R.array.bookmarkroute);
         }
     }
 
-    public void showDialog(String ret, int pos){
-        String[] station = getResources().getStringArray(R.array.bookmark);
+    public void showDialog(String ret, int pos, int id){
+        String[] station = getResources().getStringArray(id);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(BookmarkActivity.this);
 
@@ -338,41 +330,69 @@ public class BookmarkActivity extends AppCompatActivity implements RecyclerViewI
         builder.setItems(station, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(i == 0){
-                    Intent intent = new Intent(getApplicationContext(), StationSearch.class);
-                    intent.putExtra("stt", "start");
-                    intent.putExtra("number", ret);
-                    startActivity(intent);
-                    finish();
-                }
-                else if(i == 1){
-                    Intent intent = new Intent(getApplicationContext(), StationSearch.class);
-                    intent.putExtra("stt", "middle");
-                    intent.putExtra("number", ret);
-                    startActivity(intent);
-                    finish();
-                }
-                else if(i == 2){
-                    Intent intent = new Intent(getApplicationContext(), StationSearch.class);
-                    intent.putExtra("stt", "end");
-                    intent.putExtra("number", ret);
-                    startActivity(intent);
-                    finish();
-                }
-                else if(i == 3){
-                    bookmarkArrayList.remove(pos);
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (int j = 0; j < bookmarkArrayList.size(); j++) {
-                        stringBuilder.append(bookmarkArrayList.get(j).getBookmark() + System.lineSeparator());
-                    } //배열에서 지울거 지우고 배열내용으로 txt다시 써줌
-                    try {
-                        writeToFile("Bookmark.txt", stringBuilder.toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                if (id == R.array.bookmark) {
+                    if (i == 0) {
+                        Intent intent = new Intent(getApplicationContext(), StationSearch.class);
+                        intent.putExtra("stt", "start");
+                        intent.putExtra("number", ret);
+                        startActivity(intent);
+                        finish();
+                    } else if (i == 1) {
+                        Intent intent = new Intent(getApplicationContext(), StationSearch.class);
+                        intent.putExtra("stt", "middle");
+                        intent.putExtra("number", ret);
+                        startActivity(intent);
+                        finish();
+                    } else if (i == 2) {
+                        Intent intent = new Intent(getApplicationContext(), StationSearch.class);
+                        intent.putExtra("stt", "end");
+                        intent.putExtra("number", ret);
+                        startActivity(intent);
+                        finish();
+                    } else if (i == 3) {
+                        bookmarkArrayList.remove(pos);
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for (int j = 0; j < bookmarkArrayList.size(); j++) {
+                            stringBuilder.append(bookmarkArrayList.get(j).getBookmark() + System.lineSeparator());
+                        } //배열에서 지울거 지우고 배열내용으로 txt다시 써줌
+                        try {
+                            writeToFile("Bookmark.txt", stringBuilder.toString());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        adapter = new BookmarkAdapter(bookmarkArrayList);
+                        recyclerView.setAdapter(adapter);
+                        Toast.makeText(getApplicationContext(), "즐겨찾기에서 제거됨", Toast.LENGTH_SHORT).show();
                     }
-                    adapter = new BookmarkAdapter(bookmarkArrayList);
-                    recyclerView.setAdapter(adapter);
-                    Toast.makeText(getApplicationContext(), "즐겨찾기에서 제거됨", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (i == 0) {
+                        String[] stations = bookmarkArrayList.get(pos).getBookmark().split("->");
+                        Intent intent = new Intent(getApplicationContext(), StationSearch.class);
+                        intent.putExtra("start", stations[0]);
+                        if (stations.length > 2) {
+                            intent.putExtra("mid", stations[1]);
+                            intent.putExtra("end", stations[2]);
+                        } else {
+                            intent.putExtra("mid", "middle station");
+                            intent.putExtra("end", stations[1]);
+                        }
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        bookmarkArrayList.remove(pos);
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for (int j = 0; j < bookmarkArrayList.size(); j++) {
+                            stringBuilder.append(bookmarkArrayList.get(j).getBookmark() + System.lineSeparator());
+                        } //배열에서 지울거 지우고 배열내용으로 txt다시 써줌
+                        try {
+                            writeToFile("Bookmark.txt", stringBuilder.toString());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        adapter = new BookmarkAdapter(bookmarkArrayList);
+                        recyclerView.setAdapter(adapter);
+                        Toast.makeText(getApplicationContext(), "즐겨찾기에서 제거됨", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

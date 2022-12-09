@@ -14,4 +14,8 @@
         <item>도착역</item>
         <item>즐겨찾기 제거</item>
     </string-array>
+    <string-array name="bookmarkroute">
+        <item>경로 적용</item>
+        <item>즐겨찾기 제거</item>
+    </string-array>
 </resources>
