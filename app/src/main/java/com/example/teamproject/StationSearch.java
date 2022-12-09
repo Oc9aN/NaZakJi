@@ -2,7 +2,11 @@ package com.example.teamproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.content.Intent;
@@ -214,7 +218,7 @@ public class StationSearch extends AppCompatActivity {
         }
     }
 
-    public void checkStations() {
+    public void checkStations() { //역입력 정확한지 체크
         int start = 0, end = 0, mid = 0;
         try {
             mid = Integer.parseInt(middle_station.getText().toString());
@@ -230,11 +234,13 @@ public class StationSearch extends AppCompatActivity {
         }
     }
 
+    //길찾기알고리즘 돌리고 결과 셋팅
     public void getResult(int start, int end, int mid) {
         int time = 0;
         int distance = 0;
         int cost = 0;
         int transfer = 0;
+        ArrayList<String> transferStation = new ArrayList<>();
         Train trainInfo; //이름/이전역/다음역/남은시간/혼잡도
 
         StringBuilder str = new StringBuilder();
@@ -253,8 +259,10 @@ public class StationSearch extends AppCompatActivity {
                 if (i < route.getRoute().size() - 1) {
                     str.append("->");
                 }
-                if (route.getRoute().get(i).isTransfer()) //환승 횟수 체크
+                if (route.getRoute().get(i).isTransfer()) { //환승 횟수 체크
                     transfer += 1;
+                    transferStation.add(route.getRoute().get(i).toString());
+                }
             }
         } else { //경유역이 있는경우
             Dijkstra.ResultPair route1 = Dijkstra.dijkstra(graph, start, mid, type);
@@ -273,8 +281,10 @@ public class StationSearch extends AppCompatActivity {
                 if (i < route1.getRoute().size() - 1) {
                     str.append("->");
                 }
-                if (route1.getRoute().get(i).isTransfer())
+                if (route1.getRoute().get(i).isTransfer()) { //환승 횟수 체크
                     transfer += 1;
+                    transferStation.add(route1.getRoute().get(i).toString());
+                }
             }
         }
 
@@ -295,7 +305,13 @@ public class StationSearch extends AppCompatActivity {
 
         time_taken.setText(LocalTime.of(time/3600, (time%3600)/60, (time%3600)%60).toString());
 
-        route.setText(str);
+        SpannableString spannableString = new SpannableString(str);
+        for (int i = 0; i < transferStation.size(); i++) {
+            int start_index = str.indexOf(transferStation.get(i));
+            int end_index = start_index + transferStation.get(i).length();
+            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#000088")), start_index, end_index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        route.setText(spannableString);
 
         cost_taken.setText(cost + "원");
 

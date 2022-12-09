@@ -116,9 +116,14 @@ public class Dijkstra {
         Edge curr;
         int currName = end;
         while (currName != start) {
-            curr = graph_.getGraph().get(graph_.hashToIndex(currName)).get(0);
-            route.add(curr);
-            currName = curr.getLastName();
+            try {
+                curr = graph_.getGraph().get(graph_.hashToIndex(currName)).get(0).clone();
+                route.add(curr);
+                currName = curr.getLastName();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
         route.add(graph_.getGraph().get(graph_.hashToIndex(start)).get(0));
         Collections.reverse(route);
