@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".uncomfortable_menu"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:text="불편신고"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="20dp"
+            android:background="#000000" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/subway1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1호선                  070-1111-1111"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="#00ff0000" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:background="#000000" />
+
+    <Button
+        android:id="@+id/subway2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2호선                  070-2222-2222"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="#00ff0000" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:background="#000000" />
+
+    <Button
+        android:id="@+id/subway3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="3호선                  070-3333-3333"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="#00ff0000" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:background="#000000" />
+
+    <Button
+        android:id="@+id/subway4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="4호선                  070-4444-4444"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="#00ff0000" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:background="#000000" />
+
+    <Button
+        android:id="@+id/subway5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="5호선                  070-5555-5555"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="#00ff0000" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:background="#000000" />
+
+    <Button
+        android:id="@+id/subway6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="6호선                  070-6666-6666"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="#00ff0000" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:background="#000000" />
+
+    <Button
+        android:id="@+id/subway7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="7호선                  070-7777-7777"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="#00ff0000" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:background="#000000" />
+
+    <Button
+        android:id="@+id/subway8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="8호선                  070-8888-8888"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="#00ff0000" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:background="#000000" />
+
+    <Button
+        android:id="@+id/subway9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="9호선                  070-9999-9999"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="#00ff0000" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:background="#000000" />
+
+</LinearLayout>

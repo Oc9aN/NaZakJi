@@ -70,21 +70,26 @@ public class FindStationMain extends AppCompatActivity {
 
         list.clear();
 
+        search("");
+
         editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 switch (actionId)
                 {
                     case IME_ACTION_SEARCH :
-                        Toast.makeText(FindStationMain.this, "검색 완료", Toast.LENGTH_SHORT).show();
                         // 검색버튼이 눌리면 실행할 내용 구현하기
                         String text = editSearch.getText().toString();
-                        if(text != ""){
+                        if(text.length() != 0){
                             try {
                                 writeToFile(file, text);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+                            Toast.makeText(FindStationMain.this, "검색 완료", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(FindStationMain.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
                         }
                         search(text);
                 }

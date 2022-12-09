@@ -8,16 +8,28 @@ public class Post {
     private String documentId;
     private String title;
     private String contents;
+    private String name;
+    private String time;
     @ServerTimestamp
     private Date date;
 
     public Post() {
     }
 
-    public Post(String documentId, String title, String contents) {
+    public Post(String documentId, String name,String title, String contents,String time) {
         this.documentId = documentId;
+        this.name = name;
         this.title = title;
         this.contents = contents;
+        this.time = time;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDocumentId() {
@@ -44,12 +56,18 @@ public class Post {
         this.contents = contents;
     }
 
-    public Date getDate() {
-        return date;
-    }
+    public Date getDate() { return date;}
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     @Override
@@ -58,6 +76,7 @@ public class Post {
                 "documentId='" + documentId + '\'' +
                 ", title='" + title + '\'' +
                 ", contents='" + contents + '\'' +
+                ", name='" + name + '\'' +
                 ", date=" + date +
                 '}';
     }
