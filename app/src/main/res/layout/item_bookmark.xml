@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <Button
                 android:id="@+id/item_bookmark_title"
                 android:layout_width="329dp"
                 android:layout_height="match_parent"
@@ -29,18 +29,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 tools:text="즐겨찾기" />
-
-            <TextView
-                android:id="@+id/item_bookmark_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"
-                android:background="#00ff0000"
-                android:textSize="30dp"
-                tools:text="X" />
 
         </LinearLayout>
 

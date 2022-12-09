@@ -37,7 +37,6 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ItemVi
 //        holder.onBind(listData.get(position));
         Bookmark data = listData.get(position);
         holder.title.setText(data.getBookmark()+"역");
-        holder.delete.setText("X");
     }
 
     @Override
@@ -56,17 +55,14 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ItemVi
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title;
-        private TextView delete;
 
         ItemViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.item_bookmark_title);
-            delete = itemView.findViewById(R.id.item_bookmark_delete);
         }
 
         void onBind(Bookmark data) {
             title.setText(data.getBookmark());
-            delete.setText("X");
         }
     }
 }

@@ -15,8 +15,10 @@ import com.example.teamproject.adapters.BookmarkAdapter;
 import com.example.teamproject.models.Bookmark;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class BookmarkActivity extends AppCompatActivity implements RecyclerViewItemClickListener.OnItemClickListener {
@@ -54,6 +56,16 @@ public class BookmarkActivity extends AppCompatActivity implements RecyclerViewI
         }
     }
 
+    public void writeToFile(String file, String text) throws Exception{
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter(getFilesDir() + "/" + file, false));
+            writer.append(text);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public ArrayList<String> readFromFile() throws Exception{
         String line = null;
         ArrayList<String> searchlist = new ArrayList<String>();
@@ -71,10 +83,10 @@ public class BookmarkActivity extends AppCompatActivity implements RecyclerViewI
 
     @Override
     public void onItemClick(View view, int position) {
-        showDialog(bookmarkArrayList.get(position).getBookmark());
+        showDialog(bookmarkArrayList.get(position).getBookmark(), position);
     }
 
-    public void showDialog(String ret){
+    public void showDialog(String ret, int pos){
         String[] station = getResources().getStringArray(R.array.bookmark);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(BookmarkActivity.this);
@@ -329,6 +341,18 @@ public class BookmarkActivity extends AppCompatActivity implements RecyclerViewI
                     finish();
                 }
                 else if(i == 3){
+                    bookmarkArrayList.remove(pos);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (int j = 0; j < bookmarkArrayList.size(); j++) {
+                        stringBuilder.append(bookmarkArrayList.get(j).getBookmark() + System.lineSeparator());
+                    } //배열에서 지울거 지우고 배열내용으로 txt다시 써줌
+                    try {
+                        writeToFile("Bookmark.txt", stringBuilder.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    adapter = new BookmarkAdapter(bookmarkArrayList);
+                    recyclerView.setAdapter(adapter);
                     Toast.makeText(getApplicationContext(), "즐겨찾기에서 제거됨", Toast.LENGTH_LONG).show();
                 }
             }

@@ -12,5 +12,6 @@
         <item>출발역</item>
         <item>경유역</item>
         <item>도착역</item>
+        <item>즐겨찾기 제거</item>
     </string-array>
 </resources>
