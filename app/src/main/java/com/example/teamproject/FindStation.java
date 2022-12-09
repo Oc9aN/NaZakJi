@@ -74,7 +74,7 @@ public class FindStation extends AppCompatActivity {
 
         editSearch = (EditText) findViewById(R.id.editSearch);
         listView = (ListView) findViewById(R.id.listView);
-        etSearch = (EditText) findViewById(R.id.etSearch);
+//        etSearch = (EditText) findViewById(R.id.etSearch);
 
         //리스트 생성
         list = new ArrayList<String>();

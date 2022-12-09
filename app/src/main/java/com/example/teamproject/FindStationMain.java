@@ -20,10 +20,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FindStationMain extends AppCompatActivity {
@@ -48,7 +50,7 @@ public class FindStationMain extends AppCompatActivity {
 
         editSearch = (EditText) findViewById(R.id.editSearch);
         listView = (ListView) findViewById(R.id.listView);
-        etSearch = (EditText) findViewById(R.id.etSearch);
+//        etSearch = (EditText) findViewById(R.id.etSearch);
 
         //리스트 생성
         list = new ArrayList<String>();
@@ -125,6 +127,7 @@ public class FindStationMain extends AppCompatActivity {
         if(charText.length() == 0){
             try {
                 searchlist = readFromFile();
+                Collections.reverse(searchlist);
                 for(int i = searchlist.size() - 1; i >= 0; i--){
                     list.add(searchlist.get(i));
                 }
@@ -187,6 +190,34 @@ public class FindStationMain extends AppCompatActivity {
     //파일에 검색어를 저장하는 메소드
     public void writeToFile(String file, String text) throws Exception{
         try{
+            String line = null;
+            ArrayList<String> arrStr = new ArrayList<>();
+            if (new File(getFilesDir() + "/" + file).exists()) {
+                BufferedReader buf = new BufferedReader(new FileReader(getFilesDir() + "/" + file));
+                while ((line = buf.readLine()) != null) {
+                    arrStr.add(line);
+                }
+                buf.close();
+                if (arrStr.contains(text)) {
+                    if (file == "Bookmark.txt") {
+                        Toast.makeText(getApplicationContext(), "이미 즐겨찾기에 있는 항목입니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else { //중복 지우고 맨위로
+                        arrStr.remove(arrStr.indexOf(text));
+                        arrStr.add(0, text);
+                        BufferedWriter temp = new BufferedWriter(new FileWriter(getFilesDir() + "/" + file, false));
+                        temp.close();
+                        for (int i = 0; i < arrStr.size(); i++) {
+                            BufferedWriter writer = new BufferedWriter(new FileWriter(getFilesDir() + "/" + file, true));
+                            writer.append(arrStr.get(i));
+                            writer.newLine();
+                            writer.close();
+                        }
+                        return;
+                    }
+                }
+            }
             BufferedWriter writer = new BufferedWriter(new FileWriter(getFilesDir() + "/" + file, true));
             writer.append(text);
             writer.newLine();
@@ -442,9 +473,19 @@ public class FindStationMain extends AppCompatActivity {
             builder.setTitle("관광 명소 : 영주한우거리");
         else if(ret.equals("904"))
             builder.setTitle("관광 명소 : 관악산");
+        else {
+            //검색창에 들어가게끔
+            //Toast.makeText(getApplicationContext(), "역이 아닙니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         builder.setItems(station, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                try {
+                    writeToFile(file, ret);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 if(i == 0){
                     Intent intent = new Intent(getApplicationContext(), StationSearch.class);
                     intent.putExtra("stt", "start");
@@ -467,9 +508,9 @@ public class FindStationMain extends AppCompatActivity {
                     finish();
                 }
                 else if(i == 3){
-                    Toast.makeText(getApplicationContext(), "즐겨찾기에 추가됨", Toast.LENGTH_SHORT).show();
                     try {
                         writeToFile("Bookmark.txt", ret);
+                        Toast.makeText(getApplicationContext(), "즐겨찾기에 추가됨", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

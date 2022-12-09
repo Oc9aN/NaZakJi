@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class BookmarkActivity extends AppCompatActivity implements RecyclerViewItemClickListener.OnItemClickListener {
 
@@ -46,6 +47,7 @@ public class BookmarkActivity extends AppCompatActivity implements RecyclerViewI
         bookmarkArrayList = new ArrayList<>();
         try {
             ArrayList<String> arrStr = readFromFile();
+            Collections.reverse(arrStr);
             int type = 0;
             for (int i = 0; i < arrStr.size(); i++) {
                 if (arrStr.get(i).contains("->"))
