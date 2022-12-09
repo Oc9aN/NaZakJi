@@ -97,7 +97,7 @@ public class TrainList {
         }
     }
 
-    public String findMinTrain(ArrayList<Edge> route) {
+    public Train findMinTrain(ArrayList<Edge> route) {
         Train minTrain = null;
         int minTime = Integer.MAX_VALUE;
         int curLineNum = route.get(0).compareLine(route.get(1).getLineNum());
@@ -120,9 +120,8 @@ public class TrainList {
                 }
             }
         }
-        return minTrain.getInfo() + "남은시간은: " +
-                LocalTime.of(minTime/3600, (minTime%3600)/60, (minTime%3600)%60).toString()
-                + "입니다.";
+        minTrain.setMinTime(minTime);
+        return minTrain;
     }
 
     public Graph getGraph() {

@@ -17,8 +17,10 @@ public class Train {
     private boolean direction;
     private int beforeStationIndex;
     private int nextStationIndex;
+    private int block;
     private int[] density;
     private Random random;
+    private int minTime;
 
     public int getLineNum() {
         return lineNum;
@@ -31,8 +33,9 @@ public class Train {
         this.lineNum = lineNum;
         this.direction = direction;
         this.trainlist = trainlist;
-        this.density = new int[block];
-        for (int i = 0; i < block; i++) {
+        this.block = block;
+        this.density = new int[this.block];
+        for (int i = 0; i < this.block; i++) {
             this.density[i] = random.nextInt(101);
         }
     }
@@ -144,11 +147,29 @@ public class Train {
         return result;
     }
 
-    public String getInfo() {
-        return "열차이름: " + this.name +
-                " 이전역: " + this.trainlist.getLines(this.lineNum - 1).get(this.beforeStationIndex) +
-                "다음역: " + this.trainlist.getLines(this.lineNum - 1).get(this.nextStationIndex) + "입니다. ";
+    public int getBefore() {
+        return this.trainlist.getLines(this.lineNum - 1).get(this.beforeStationIndex).getName();
+    }
+    public int getnext() {
+        return this.trainlist.getLines(this.lineNum - 1).get(this.nextStationIndex).getName();
+    }
+    public int getMinTime() {
+        return this.minTime;
+    }
+    public int[] getDensity() {
+        return this.density;
+    }
+    public int getblock() {
+        return this.block;
     }
 
+//    public String getInfo() {
+//        return this.name +
+//                "/" + this.trainlist.getLines(this.lineNum - 1).get(this.beforeStationIndex) +
+//                "/" + this.trainlist.getLines(this.lineNum - 1).get(this.nextStationIndex);
+//    }
 
+    public void setMinTime(int time) {
+        this.minTime = time;
+    }
 }
