@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 public class SideMenu extends AppCompatActivity {
 
@@ -66,7 +65,7 @@ public class SideMenu extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), StationSearch.class);
+                Intent intent = new Intent(getApplicationContext(), BookmarkActivity.class);
                 startActivity(intent);
             }
         });
