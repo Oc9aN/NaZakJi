@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.content.Intent;
 import android.view.WindowInsets;
@@ -17,7 +18,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
+    //뒤로가기
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent event) {
+        if(keycode == android.view.KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(true);
+            finishAndRemoveTask();
+            System.exit(0);
+            return true;
+        }
+        return false;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, FindStationMain.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -45,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SideMenu.class);
                 startActivity(intent);
+                finish();
+
             }
         });
 
