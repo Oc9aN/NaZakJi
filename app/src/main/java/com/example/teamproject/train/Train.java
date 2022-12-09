@@ -110,7 +110,7 @@ public class Train {
                         }
                     }
                     for (int i = nextStationIndex; this.trainlist.getLines(this.lineNum - 1).get(i).getName() != target;) {
-                        result += this.trainlist.getTimeWeight(this.lineNum - 1).get(i - 1);
+                        result += this.trainlist.getTimeWeight(this.lineNum - 1).get(i == 0? i : i - 1);
                         if (i + 1 < this.trainlist.getLines(this.lineNum - 1).size())
                             i++;
                         else

@@ -83,6 +83,15 @@ public class StationSearch extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
+        //출발역 취소
+        Button start_cancel = (Button) findViewById(R.id.start_cancel);
+        start_cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                start_station.setText("start station");
+            }
+        });
 
         // 환승역 버튼 클릭시 액티비티 전환
         Button middle_btn = (Button) findViewById(R.id.middle_station);
@@ -95,6 +104,15 @@ public class StationSearch extends AppCompatActivity {
                 startActivityForResult(intent, 2);
             }
         });
+        //환승역 취소
+        Button middle_cancel = (Button) findViewById(R.id.middle_cancel);
+        middle_cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                start_station.setText("middle station");
+            }
+        });
 
         // 도착역 버튼 클릭시 액티비티 전환
         Button end_btn = (Button) findViewById(R.id.end_station);
@@ -105,6 +123,15 @@ public class StationSearch extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), FindStation.class);
                 intent.putExtra("station", "end");
                 startActivityForResult(intent, 3);
+            }
+        });
+        //도착역 취소
+        Button end_station = (Button) findViewById(R.id.end_station);
+        end_station.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                start_station.setText("end station");
             }
         });
 
