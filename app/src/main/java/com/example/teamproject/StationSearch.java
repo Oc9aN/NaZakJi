@@ -124,7 +124,7 @@ public class StationSearch extends AppCompatActivity {
                 intent.putExtra("station", "end");
                 startActivityForResult(intent, 3);
             }
-        });ㄴ
+        });
         //도착역 취소
         Button end_station = (Button) findViewById(R.id.end_station);
         end_station.setOnClickListener(new View.OnClickListener() {
