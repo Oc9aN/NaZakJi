@@ -472,35 +472,35 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_weight="2"
-                    android:src="@drawable/redtrain" />
+                    android:src="@drawable/whitetrain" />
 
                 <ImageView
                     android:id="@+id/train2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_weight="2"
-                    android:src="@drawable/redtrain" />
+                    android:src="@drawable/whitetrain" />
 
                 <ImageView
                     android:id="@+id/train3"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_weight="2"
-                    android:src="@drawable/redtrain" />
+                    android:src="@drawable/whitetrain" />
 
                 <ImageView
                     android:id="@+id/train4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_weight="2"
-                    android:src="@drawable/redtrain" />
+                    android:src="@drawable/whitetrain" />
 
                 <ImageView
                     android:id="@+id/train5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_weight="2"
-                    android:src="@drawable/orangetrain" />
+                    android:src="@drawable/whitetrain" />
 
             </LinearLayout>
 
