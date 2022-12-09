@@ -36,7 +36,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ItemVi
         // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
 //        holder.onBind(listData.get(position));
         Bookmark data = listData.get(position);
-        holder.title.setText(data.getBookmark()+"역");
+        holder.title.setText(data.getBookmark());
     }
 
     @Override

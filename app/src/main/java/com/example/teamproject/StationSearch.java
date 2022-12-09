@@ -16,6 +16,8 @@ import com.example.teamproject.navigation.Graph;
 import com.example.teamproject.train.Train;
 import com.example.teamproject.train.TrainList;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalTime;
@@ -102,90 +104,75 @@ public class StationSearch extends AppCompatActivity {
             }
         });
 
-        // 최단거리 버튼 클릭시 액티비티 전환
+        // 최단거리 버튼 클릭시
         Button distance_btn = (Button) findViewById(R.id.short_distance);
         distance_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 type = 1;
-                int start = 0, end = 0, mid = 0;
-                try {
-                    mid = Integer.parseInt(middle_station.getText().toString());
-                } catch (Exception e) {
-                    mid = 0;
-                }
-                try {
-                    start = Integer.parseInt(start_station.getText().toString());
-                    end = Integer.parseInt(end_station.getText().toString());
-                    getResult(start, end, mid);
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "출발역과 도착역을 설정해주세요.", Toast.LENGTH_LONG).show();
-                }
+                checkStations();
             }
         });
 
-        // 최소환승 버튼 클릭시 액티비티 전환
+        // 최소환승 버튼 클릭시
         Button transfer_btn = (Button) findViewById(R.id.short_transfer);
         transfer_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 type = 4;
-                int start = 0, end = 0, mid = 0;
-                try {
-                    mid = Integer.parseInt(middle_station.getText().toString());
-                } catch (Exception e) {
-                    mid = 0;
-                }
-                try {
-                    start = Integer.parseInt(start_station.getText().toString());
-                    end = Integer.parseInt(end_station.getText().toString());
-                    getResult(start, end, mid);
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "출발역과 도착역을 설정해주세요.", Toast.LENGTH_LONG).show();
-                }
+                checkStations();
             }
         });
 
-        // 최소시간 버튼 클릭시 액티비티 전환
+        // 최소시간 버튼 클릭시
         Button time_btn = (Button) findViewById(R.id.short_time);
         time_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 type = 0;
-                int start = 0, end = 0, mid = 0;
-                try {
-                    mid = Integer.parseInt(middle_station.getText().toString());
-                } catch (Exception e) {
-                    mid = 0;
-                }
-                try {
-                    start = Integer.parseInt(start_station.getText().toString());
-                    end = Integer.parseInt(end_station.getText().toString());
-                    getResult(start, end, mid);
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "출발역과 도착역을 설정해주세요.", Toast.LENGTH_LONG).show();
-                }
+                checkStations();
             }
         });
 
-        // 최소비용 버튼 클릭시 액티비티 전환
+        // 최소비용 버튼 클릭시
         Button money_btn = (Button) findViewById(R.id.short_money);
         money_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 type = 2;
-                int start = 0, end = 0, mid = 0;
-                try {
-                    mid = Integer.parseInt(middle_station.getText().toString());
-                } catch (Exception e) {
-                    mid = 0;
-                }
+                checkStations();
+            }
+        });
+
+        Button bookmark_route = (Button) findViewById(R.id.bookmark_route);
+        bookmark_route.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringBuilder route = new StringBuilder();
+                int start = 0;
+                int end = 0;
                 try {
                     start = Integer.parseInt(start_station.getText().toString());
                     end = Integer.parseInt(end_station.getText().toString());
-                    getResult(start, end, mid);
+                    route.append(start + "->");
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "출발역과 도착역을 설정해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "출발역과 도착역을 설정해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    int mid = Integer.parseInt(middle_station.getText().toString());
+                    route.append(mid + "->" + end);
+                } catch (Exception e) {
+                    route.append(end);
+                }
+                try{ //txt에 ""->""형식으로 저장
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(getFilesDir() + "/" + "Bookmark.txt", true));
+                    writer.append(route);
+                    writer.newLine();
+                    writer.close();
+                    Toast.makeText(getApplicationContext(), "즐겨찾기에 추가됨.", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -197,19 +184,49 @@ public class StationSearch extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 String result = data.getStringExtra("result");
                 start_station.setText(result);
+                return;
             }
         }
         else if(requestCode == 2){
             if(resultCode == RESULT_OK){
                 String result = data.getStringExtra("result");
                 middle_station.setText(result);
+                return;
             }
         }
         else if(requestCode == 3){
             if(resultCode == RESULT_OK){
                 String result = data.getStringExtra("result");
                 end_station.setText(result);
+                return;
             }
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Intent intent = getIntent();
+        if (intent.getStringExtra("start") != null) {
+            start_station.setText(intent.getStringExtra("start"));
+            middle_station.setText(intent.getStringExtra("mid"));
+            end_station.setText(intent.getStringExtra("end"));
+        }
+    }
+
+    public void checkStations() {
+        int start = 0, end = 0, mid = 0;
+        try {
+            mid = Integer.parseInt(middle_station.getText().toString());
+        } catch (Exception e) {
+            mid = 0;
+        }
+        try {
+            start = Integer.parseInt(start_station.getText().toString());
+            end = Integer.parseInt(end_station.getText().toString());
+            getResult(start, end, mid);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "출발역과 도착역을 설정해주세요.", Toast.LENGTH_SHORT).show();
         }
     }
 
