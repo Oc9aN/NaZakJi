@@ -2,7 +2,7 @@ package com.example.teamproject.navigation;
 
 import java.util.ArrayList;
 
-public class Edge { //역에 대한 정보를 저장하는 클래스
+public class Edge implements Cloneable { //역에 대한 정보를 저장하는 클래스
     public static class Weight {
         private int time;
         private int distance;
@@ -97,5 +97,10 @@ public class Edge { //역에 대한 정보를 저장하는 클래스
     @Override
     public String toString() {
         return this.name + "";
+    }
+
+    @Override
+    protected Edge clone() throws CloneNotSupportedException {
+        return (Edge) super.clone();
     }
 }
