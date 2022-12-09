@@ -46,8 +46,11 @@ public class BookmarkActivity extends AppCompatActivity implements RecyclerViewI
         bookmarkArrayList = new ArrayList<>();
         try {
             ArrayList<String> arrStr = readFromFile();
+            int type = 0;
             for (int i = 0; i < arrStr.size(); i++) {
-                bookmarkArrayList.add(new Bookmark(arrStr.get(i)));
+                if (arrStr.get(i).contains("->"))
+                    type = 1;
+                bookmarkArrayList.add(new Bookmark(arrStr.get(i), type));
             }
             adapter = new BookmarkAdapter(bookmarkArrayList);
             recyclerView.setAdapter(adapter);
@@ -83,7 +86,21 @@ public class BookmarkActivity extends AppCompatActivity implements RecyclerViewI
 
     @Override
     public void onItemClick(View view, int position) {
-        showDialog(bookmarkArrayList.get(position).getBookmark(), position);
+        if (bookmarkArrayList.get(position).getType() == 0)
+            showDialog(bookmarkArrayList.get(position).getBookmark(), position);
+        else {
+            String[] stations = bookmarkArrayList.get(position).getBookmark().split("->");
+            Intent intent = new Intent(getApplicationContext(), StationSearch.class);
+            intent.putExtra("start", stations[0]);
+            if (stations.length > 2) {
+                intent.putExtra("mid", stations[1]);
+                intent.putExtra("end", stations[2]);
+            } else {
+                intent.putExtra("mid", "middle station");
+                intent.putExtra("end", stations[1]);
+            }
+            startActivity(intent);
+        }
     }
 
     public void showDialog(String ret, int pos){
@@ -353,7 +370,7 @@ public class BookmarkActivity extends AppCompatActivity implements RecyclerViewI
                     }
                     adapter = new BookmarkAdapter(bookmarkArrayList);
                     recyclerView.setAdapter(adapter);
-                    Toast.makeText(getApplicationContext(), "즐겨찾기에서 제거됨", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "즐겨찾기에서 제거됨", Toast.LENGTH_SHORT).show();
                 }
             }
         });

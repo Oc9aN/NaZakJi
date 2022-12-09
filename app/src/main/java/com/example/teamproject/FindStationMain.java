@@ -467,7 +467,7 @@ public class FindStationMain extends AppCompatActivity {
                     finish();
                 }
                 else if(i == 3){
-                    Toast.makeText(getApplicationContext(), "즐겨찾기에 추가됨", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "즐겨찾기에 추가됨", Toast.LENGTH_SHORT).show();
                     try {
                         writeToFile("Bookmark.txt", ret);
                     } catch (Exception e) {
