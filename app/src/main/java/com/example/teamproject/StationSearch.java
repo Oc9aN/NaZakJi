@@ -8,6 +8,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
@@ -20,7 +21,9 @@ import com.example.teamproject.navigation.Graph;
 import com.example.teamproject.train.Train;
 import com.example.teamproject.train.TrainList;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,6 +43,18 @@ public class StationSearch extends AppCompatActivity {
     TextView start_station;
     TextView middle_station;
     TextView end_station;
+
+    //뒤로가기
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent event) {
+        if(keycode == android.view.KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(getApplicationContext(), SideMenu.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,8 +141,8 @@ public class StationSearch extends AppCompatActivity {
             }
         });
         //도착역 취소
-        Button end_station = (Button) findViewById(R.id.end_station);
-        end_station.setOnClickListener(new View.OnClickListener() {
+        Button end_cancel = (Button) findViewById(R.id.end_cancel);
+        end_cancel.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -197,6 +212,17 @@ public class StationSearch extends AppCompatActivity {
                     route.append(end);
                 }
                 try{ //txt에 ""->""형식으로 저장
+                    String line = null;
+                    ArrayList<String> arrStr = new ArrayList<>();
+                    BufferedReader buf = new BufferedReader(new FileReader(getFilesDir() + "/" + "Bookmark.txt"));
+                    while((line = buf.readLine()) != null){
+                        arrStr.add(line);
+                    }
+                    buf.close();
+                    if (arrStr.contains(route.toString())) {
+                        Toast.makeText(getApplicationContext(), "이미 즐겨찾기에 있는 항목입니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     BufferedWriter writer = new BufferedWriter(new FileWriter(getFilesDir() + "/" + "Bookmark.txt", true));
                     writer.append(route);
                     writer.newLine();

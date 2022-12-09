@@ -74,7 +74,7 @@ public class FindStation extends AppCompatActivity {
 
         editSearch = (EditText) findViewById(R.id.editSearch);
         listView = (ListView) findViewById(R.id.listView);
-        etSearch = (EditText) findViewById(R.id.etSearch);
+//        etSearch = (EditText) findViewById(R.id.etSearch);
 
         //리스트 생성
         list = new ArrayList<String>();
@@ -238,6 +238,28 @@ public class FindStation extends AppCompatActivity {
     //파일에 검색어를 저장하는 메소드
     public void writeToFile(String file, String text) throws Exception{
         try{
+            String line = null;
+            ArrayList<String> arrStr = new ArrayList<>();
+            if (new File(getFilesDir() + "/" + file).exists()) {
+                BufferedReader buf = new BufferedReader(new FileReader(getFilesDir() + "/" + file));
+                while ((line = buf.readLine()) != null) {
+                    arrStr.add(line);
+                }
+                buf.close();
+                if (arrStr.contains(text)) {//중복 지우고 맨위로
+                    arrStr.remove(arrStr.indexOf(text));
+                    arrStr.add(text);
+                    BufferedWriter temp = new BufferedWriter(new FileWriter(getFilesDir() + "/" + file, false));
+                    temp.close();
+                    for (int i = 0; i < arrStr.size(); i++) {
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(getFilesDir() + "/" + file, true));
+                        writer.append(arrStr.get(i));
+                        writer.newLine();
+                        writer.close();
+                    }
+                    return;
+                }
+            }
             BufferedWriter writer = new BufferedWriter(new FileWriter(getFilesDir() + "/" + file, true));
             writer.append(text);
             writer.newLine();

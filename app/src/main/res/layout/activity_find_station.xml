@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:hint="역 이름을 입력하세요."
                 android:imeOptions="actionSearch"
-                android:inputType="text"
+                android:inputType="number"
                 android:singleLine="true"
                 android:textColorHint="@color/black" />
 
