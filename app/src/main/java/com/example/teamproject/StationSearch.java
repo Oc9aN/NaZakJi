@@ -125,7 +125,7 @@ public class StationSearch extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                start_station.setText("middle station");
+                middle_station.setText("middle station");
             }
         });
 
@@ -146,7 +146,7 @@ public class StationSearch extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                start_station.setText("end station");
+                end_station.setText("end station");
             }
         });
 
