@@ -19,26 +19,26 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="320dp"
+                android:layout_width="294dp"
                 android:layout_height="wrap_content"
-                android:text="                 길찾기"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:layout_marginTop="8dp"/>
+                android:text="              길찾기"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/bookmark_route"
-                android:layout_width="wrap_content"
+                android:layout_width="65dp"
                 android:layout_height="wrap_content"
-                android:text="☆"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:textColor="#808080"
-                android:background="#00ff0000"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginRight="5dp"
+                android:background="#00ff0000"
+                android:text="☆"
+                android:textColor="#808080"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
 
         </LinearLayout>
