@@ -23,6 +23,7 @@ import com.example.teamproject.train.TrainList;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -212,16 +213,18 @@ public class StationSearch extends AppCompatActivity {
                     route.append(end);
                 }
                 try{ //txt에 ""->""형식으로 저장
-                    String line = null;
-                    ArrayList<String> arrStr = new ArrayList<>();
-                    BufferedReader buf = new BufferedReader(new FileReader(getFilesDir() + "/" + "Bookmark.txt"));
-                    while((line = buf.readLine()) != null){
-                        arrStr.add(line);
-                    }
-                    buf.close();
-                    if (arrStr.contains(route.toString())) {
-                        Toast.makeText(getApplicationContext(), "이미 즐겨찾기에 있는 항목입니다.", Toast.LENGTH_SHORT).show();
-                        return;
+                    if (new File(getFilesDir() + "/" + "Bookmark.txt").exists()) {
+                        String line = null;
+                        ArrayList<String> arrStr = new ArrayList<>();
+                        BufferedReader buf = new BufferedReader(new FileReader(getFilesDir() + "/" + "Bookmark.txt"));
+                        while ((line = buf.readLine()) != null) {
+                            arrStr.add(line);
+                        }
+                        buf.close();
+                        if (arrStr.contains(route.toString())) {
+                            Toast.makeText(getApplicationContext(), "이미 즐겨찾기에 있는 항목입니다.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                     }
                     BufferedWriter writer = new BufferedWriter(new FileWriter(getFilesDir() + "/" + "Bookmark.txt", true));
                     writer.append(route);

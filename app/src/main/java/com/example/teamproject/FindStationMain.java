@@ -85,7 +85,6 @@ public class FindStationMain extends AppCompatActivity {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            Toast.makeText(FindStationMain.this, "검색 완료", Toast.LENGTH_SHORT).show();
                         }
                         else{
                             Toast.makeText(FindStationMain.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();

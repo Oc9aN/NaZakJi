@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -115,7 +116,6 @@ public class FindStation extends AppCompatActivity {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            Toast.makeText(FindStation.this, "검색 완료", Toast.LENGTH_SHORT).show();
                         }
                         else
                             Toast.makeText(FindStation.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
@@ -182,6 +182,14 @@ public class FindStation extends AppCompatActivity {
                     }
                 }
                 String ret = (String) adapterView.getAdapter().getItem(i);
+                if (!arraylist.contains(ret)) {
+                    editSearch.setText(ret);
+                    editSearch.setSelection(editSearch.getText().length());
+                    editSearch.requestFocus();
+                    InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    manager.showSoftInput(editSearch, InputMethodManager.SHOW_IMPLICIT);
+                    return;
+                }
                 if(station == "start"){
                     Intent intent = new Intent();
                     intent.putExtra("result", ret);

@@ -146,7 +146,7 @@ public class Dijkstra {
 
     private static void setTransfer(ArrayList<Edge> route) {
         int curLine = 0;
-        if (route.get(0).getLineNum().size() >= 1) {
+        if (route.get(0).getLineNum().size() <= 1) {
             curLine = route.get(0).getLineNum().get(0);
         } else {
             curLine = route.get(0).compareLine(route.get(1).getLineNum());
