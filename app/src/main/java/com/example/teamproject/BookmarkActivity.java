@@ -1,22 +1,18 @@
 package com.example.teamproject;
 
-import static android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import com.example.teamproject.adapters.BookmarkAdapter;
+import com.example.teamproject.models.Bookmark;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,184 +20,57 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.List;
 
-public class FindStationMain extends AppCompatActivity {
-    private List<String> list;
-    private ListView listView;
-    private EditText editSearch;
-    private EditText etSearch;
-    private EditText filename;
-    private SearchAdapter adapter;  //리스트뷰에 연결할 어뎁터
-    private ArrayList<String> arraylist;
-    private List<String> searchlist;
-    private String ret;
-    private AlertDialog.Builder builder;
-    String[] station;
+public class BookmarkActivity extends AppCompatActivity implements RecyclerViewItemClickListener.OnItemClickListener {
 
-    private final static String file = "searchlist.txt";
+    private RecyclerView recyclerView;
+    private BookmarkAdapter adapter;
+    ArrayList<Bookmark> bookmarkArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_station);
+        setContentView(R.layout.activity_bookmark);
 
-        editSearch = (EditText) findViewById(R.id.editSearch);
-        listView = (ListView) findViewById(R.id.listView);
-        etSearch = (EditText) findViewById(R.id.etSearch);
+        recyclerView = findViewById(R.id.main_recyclerview);
 
-        //리스트 생성
-        list = new ArrayList<String>();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-        //검색에 사용할 데이터 저장
-        settingList();
-
-        //리스트 데이터 arraylist에 복사
-        arraylist = new ArrayList<String>();
-        arraylist.addAll(list);
-
-
-        adapter = new SearchAdapter(list, this);
-
-
-        listView.setAdapter(adapter);
-
-
-
-        list.clear();
-
-        search("");
-
-        editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                switch (actionId)
-                {
-                    case IME_ACTION_SEARCH :
-                        // 검색버튼이 눌리면 실행할 내용 구현하기
-                        String text = editSearch.getText().toString();
-                        if(text.length() != 0){
-                            try {
-                                writeToFile(file, text);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            Toast.makeText(FindStationMain.this, "검색 완료", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText(FindStationMain.this, "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
-                        }
-                        search(text);
-                }
-                return true;
-            }
-        });
-
-        editSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String text = editSearch.getText().toString();
-                search(text);
-            }
-        });
+        recyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(this,recyclerView,this));
     }
 
-    public void search(String charText){
-
-        //문자 입력시마다 리스트 지우고 새로 뿌림
-        list.clear();
-
-        //문자 입력 없으면 최근 검색어 보여줌.
-        if(charText.length() == 0){
-            try {
-                searchlist = readFromFile();
-                for(int i = searchlist.size() - 1; i >= 0; i--){
-                    list.add(searchlist.get(i));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        bookmarkArrayList = new ArrayList<>();
+        try {
+            ArrayList<String> arrStr = readFromFile();
+            for (int i = 0; i < arrStr.size(); i++) {
+                bookmarkArrayList.add(new Bookmark(arrStr.get(i)));
             }
-        }
-        else{   //입력하면 포함된 데이터 보여줌
-            for(int i = 0; i < arraylist.size(); i++){
-                if (arraylist.get(i).toLowerCase().contains(charText))
-                {
-                    list.add(arraylist.get(i));
-                }
-            }
-        }
-        //리스트 데이터가 변경되었으므로 검색된 데이터를 화면에 보여준다
-        adapter.notifyDataSetChanged();
-
-        //리스트뷰 클릭 시 전화면으로 이동하고 선택한 역을 적용시킨다
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ret = (String) adapterView.getAdapter().getItem(i);
-                showDialog(ret);
-            }
-        });
-    }
-
-    //검색에 사용될 데이터를 리스트에 추가
-    private void settingList(){
-        for(int i=101;i<124;i++){
-            list.add(Integer.toString(i));
-        }
-        for(int i=201;i<218;i++){
-            list.add(Integer.toString(i));
-        }
-        for(int i=301;i<309;i++){
-            list.add(Integer.toString(i));
-        }
-        for(int i=401;i<418;i++){
-            list.add(Integer.toString(i));
-        }
-        for(int i=501;i<508;i++){
-            list.add(Integer.toString(i));
-        }
-        for(int i=601;i<623;i++){
-            list.add(Integer.toString(i));
-        }
-        for(int i=701;i<708;i++){
-            list.add(Integer.toString(i));
-        }
-        for(int i=801;i<807;i++){
-            list.add(Integer.toString(i));
-        }
-        for(int i=901;i<905;i++){
-            list.add(Integer.toString(i));
+            adapter = new BookmarkAdapter(bookmarkArrayList);
+            recyclerView.setAdapter(adapter);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    //파일에 검색어를 저장하는 메소드
     public void writeToFile(String file, String text) throws Exception{
         try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter(getFilesDir() + "/" + file, true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(getFilesDir() + "/" + file, false));
             writer.append(text);
-            writer.newLine();
             writer.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    //최근 검색어 파일을 읽어오는 메소드
     public ArrayList<String> readFromFile() throws Exception{
         String line = null;
         ArrayList<String> searchlist = new ArrayList<String>();
         try{
-            BufferedReader buf = new BufferedReader(new FileReader(getFilesDir() + "/" + "searchlist.txt"));
+            BufferedReader buf = new BufferedReader(new FileReader(getFilesDir() + "/" + "Bookmark.txt"));
             while((line = buf.readLine()) != null){
                 searchlist.add(line);
             }
@@ -212,10 +81,15 @@ public class FindStationMain extends AppCompatActivity {
         return searchlist;
     }
 
-    public void showDialog(String ret){
-        station = getResources().getStringArray(R.array.station);
+    @Override
+    public void onItemClick(View view, int position) {
+        showDialog(bookmarkArrayList.get(position).getBookmark(), position);
+    }
 
-        builder = new AlertDialog.Builder(FindStationMain.this);
+    public void showDialog(String ret, int pos){
+        String[] station = getResources().getStringArray(R.array.bookmark);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(BookmarkActivity.this);
 
 
         if(ret.equals("101"))
@@ -467,12 +341,19 @@ public class FindStationMain extends AppCompatActivity {
                     finish();
                 }
                 else if(i == 3){
-                    Toast.makeText(getApplicationContext(), "즐겨찾기에 추가됨", Toast.LENGTH_LONG).show();
+                    bookmarkArrayList.remove(pos);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (int j = 0; j < bookmarkArrayList.size(); j++) {
+                        stringBuilder.append(bookmarkArrayList.get(j).getBookmark() + System.lineSeparator());
+                    } //배열에서 지울거 지우고 배열내용으로 txt다시 써줌
                     try {
-                        writeToFile("Bookmark.txt", ret);
+                        writeToFile("Bookmark.txt", stringBuilder.toString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    adapter = new BookmarkAdapter(bookmarkArrayList);
+                    recyclerView.setAdapter(adapter);
+                    Toast.makeText(getApplicationContext(), "즐겨찾기에서 제거됨", Toast.LENGTH_LONG).show();
                 }
             }
         });

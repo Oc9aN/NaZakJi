@@ -305,6 +305,7 @@ public class StationSearch extends AppCompatActivity {
         }
     }
 
+    //열차 셋팅
     public void setTrain(ArrayList<ArrayList<String>> excel) {
         for (ArrayList<String> row: excel) {
             LocalTime startTime = LocalTime.of(Integer.parseInt(row.get(0)), Integer.parseInt(row.get(1)));
@@ -316,6 +317,7 @@ public class StationSearch extends AppCompatActivity {
         }
     }
 
+    //엑셀 반복문
     public ArrayList<ArrayList<String>> excelIterator(String file) {
         ArrayList<ArrayList<String>> result = new ArrayList<>();
         try {
